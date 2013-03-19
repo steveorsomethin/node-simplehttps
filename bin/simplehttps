@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 var optimist = require('optimist'),
-    express = require('express'),
+    connect = require('connect'),
     https = require('https'),
     fs = require('fs'),
     path = require('path'),
-    app = express();
+    app = connect();
 
 var usage = [
     'Runs a simple https server on port 443. NOTE: Must be run with elevated permissions.\n',
@@ -47,8 +47,8 @@ process.nextTick(function() {
     console.log('Server running...');
 });
 
-app.use(express.directory(directory));
-app.use(express.static(directory));
+app.use(connect.directory(directory));
+app.use(connect.static(directory));
 
 https.createServer({
     key: fs.readFileSync(path.join(workingDir, key)),
