@@ -19,10 +19,10 @@ var optimist = require('optimist'),
 var usage = [
     'Runs a simple https server on port 443. NOTE: Must be run with elevated permissions.\n',
     'Before running, you\'ll need a self-signed key and cert. The following should work:',
-    '   openssl genrsa -out key.pem',
-    '   openssl req -new -key key.pem -out csr.pem',
-    '   openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem',
-    '   rm csr.pem'
+    '\topenssl genrsa -out key.pem',
+    '\topenssl req -new -key key.pem -out csr.pem',
+    '\topenssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem',
+    '\trm csr.pem'
 ];
 
 var argv = optimist
