@@ -1,14 +1,5 @@
 #!/usr/bin/env node
 
-/*
-* Before running, you'll need a self-signed key and cert. The following should work:
-*
-* openssl genrsa -out key.pem
-* openssl req -new -key key.pem -out csr.pem
-* openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
-* rm csr.pem
-*/
-
 var optimist = require('optimist'),
     express = require('express'),
     https = require('https'),
