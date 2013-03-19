@@ -1,0 +1,65 @@
+#!/usr/bin/env node
+
+/*
+* Before running, you'll need a self-signed key and cert. The following should work:
+*
+* openssl genrsa -out key.pem
+* openssl req -new -key key.pem -out csr.pem
+* openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
+* rm csr.pem
+*/
+
+var optimist = require('optimist'),
+    express = require('express'),
+    https = require('https'),
+    fs = require('fs'),
+    path = require('path'),
+    app = express();
+
+var usage = [
+    'Runs a simple https server on port 443. NOTE: Must be run with elevated permissions.\n',
+    'Before running, you\'ll need a self-signed key and cert. The following should work:',
+    '   openssl genrsa -out key.pem',
+    '   openssl req -new -key key.pem -out csr.pem',
+    '   openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem',
+    '   rm csr.pem'
+];
+
+var argv = optimist
+    .usage(usage.join('\n'))
+    .demand('d')
+    .alias('d', 'directory')
+    .describe('d', 'Root directory to serve')
+    .demand('k')
+    .alias('k', 'keyfile')
+    .describe('k', 'Path to the key file to use')
+    .demand('c')
+    .alias('c', 'certfile')
+    .describe('c', 'Path to the certificate file to use')
+    .argv;
+
+var directory = argv.d,
+    key = argv.k,
+    cert = argv.c,
+    workingDir = process.cwd();
+
+// Remind our users in case they forget to run elevated
+process.on('uncaughtException', function (exception) {
+    if (exception.code === 'EACCES') {
+        console.log('ERROR: Server must be run with elevated permissions. Aborting.');
+        process.exit(1);
+    }
+});
+
+// If nothing blows up, give a helpful status next tick
+process.nextTick(function() {
+    console.log('Server running...');
+});
+
+app.use(express.directory(directory));
+app.use(express.static(directory));
+
+https.createServer({
+    key: fs.readFileSync(path.join(workingDir, key)),
+    cert: fs.readFileSync(path.join(workingDir, cert))
+}, app).listen(443);
