@@ -1,11 +1,11 @@
 {
-    "name": "SimpleHttps",
+    "name": "node-simplehttps",
     "version": "0.0.1",
     "description": "Simple server for serving static content over https",
-    "homepage": "https://github.com/steveorsomethin/SimpleHttps",
+    "homepage": "https://github.com/steveorsomethin/node-simplehttps",
     "repository": {
         "type": "git",
-        "url": "https://github.com/steveorsomethin/SimpleHttps"
+        "url": "https://github.com/steveorsomethin/node-simplehttps"
     },
     "author": {
             "name": "Steve McGuire",
