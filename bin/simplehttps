@@ -53,6 +53,6 @@ app.use(connect.directory(directory));
 app.use(connect.static(directory));
 
 https.createServer({
-    key: fs.readFileSync(path.join(workingDir, key)),
-    cert: fs.readFileSync(path.join(workingDir, cert))
+    key: fs.readFileSync(path.relative(workingDir, key)),
+    cert: fs.readFileSync(path.relative(workingDir, cert))
 }, app).listen(443);
